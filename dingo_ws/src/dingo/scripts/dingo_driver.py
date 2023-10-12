@@ -138,10 +138,10 @@ class DingoDriver:
                 # Step the controller forward by dt
                 self.controller.run(self.state, command)
 
-                if self.state.behavior_state == BehaviorState.TROT: #If trotting
+                if self.state.behavior_state == BehaviorState.TROT or self.state.behavior_state == BehaviorState.REST:
                     self.controller.publish_joint_space_command(self.state.joint_angles)
                     self.controller.publish_task_space_command(self.state.rotated_foot_locations)
-                    #rospy.loginfo(state.joint_angles)
+                    # rospy.loginfo(state.joint_angles)
                     # rospy.loginfo('State.height: ', state.height)
 
                     #If running simulator, publish joint angles to gazebo controller:
@@ -182,9 +182,9 @@ class DingoDriver:
                     self.rate.sleep()
     
     def update_emergency_stop_status(self, msg):
-        if msg == 1:
+        if msg.data == 1:
             self.state.currently_estopped = 1
-        if msg == 0:
+        if msg.data == 0:
             self.state.currently_estopped = 0
         return
 

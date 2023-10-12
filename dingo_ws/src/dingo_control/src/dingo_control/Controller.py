@@ -102,6 +102,8 @@ class Controller:
             Robot controller object.
         """
 
+        previous_state = state.behavior_state
+
         ########## Update operating state based on command ######
         if command.joystick_control_event:
             state.behavior_state = self.activate_transition_mapping[state.behavior_state]
@@ -109,6 +111,9 @@ class Controller:
             state.behavior_state = self.trot_transition_mapping[state.behavior_state]
         elif command.hop_event:
             state.behavior_state = self.hop_transition_mapping[state.behavior_state]
+
+        if previous_state != state.behavior_state:
+            rospy.loginfo("State changed from %s to %s", str(previous_state), str(state.behavior_state))
 
         if state.behavior_state == BehaviorState.TROT:
             state.foot_locations, contact_modes = self.step_gait(

@@ -1,5 +1,5 @@
 import numpy as np
-from dingo_servo_interfacing.ServoCalibration import MICROS_PER_RAD, NEUTRAL_ANGLE_DEGREES
+# from dingo_servo_interfacing.ServoCalibration import MICROS_PER_RAD, NEUTRAL_ANGLE_DEGREES
 from dingo_input_interfacing.HardwareConfig import PS4_COLOR, PS4_DEACTIVATED_COLOR
 from enum import Enum
 import math as m
@@ -199,12 +199,12 @@ class Leg_linkage:
     def __init__(self,configuration):
         self.a = 35.12 #mm
         self.b = 37.6 #mm
-        self.c = 45 #mm
+        self.c = 43 #mm
         self.d = 35.23  #mm
         self.e = 67.1 #mm
         self.f = 130 #mm  #new will be 130.0
         self.g = 37 #mm
-        self.h = 45 #mm
+        self.h = 43 #mm
         self.upper_leg_length = configuration.L2*1000
         self.lower_leg_length = configuration.L3*1000
         self.lower_leg_bend_angle = m.radians(0) # degrees found on CAD
