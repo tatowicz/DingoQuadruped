@@ -51,7 +51,8 @@ The following flow diagram shows a simplified overview of how a joystick command
 - Source the workspace: `source devel/setup.bash`
 - (Optional) Add a line to .bashrc to automatically source the workspace: `echo "source ~/any_folder_name/DingoQuadruped/dingo_ws/devel/setup.bash" >> ~/.bashrc`, `source ~/.bashrc`
 
-#### Additional Notes
+### Additional Installation Steps
+#### Setting necessary permissions for ROS
 To run ROS as non-root, must set permissions correctly via udev for several /dev files.
 - Add the following to /etc/udev/rules.d/99-ROS.rules
 ```.   
@@ -64,6 +65,7 @@ To run ROS as non-root, must set permissions correctly via udev for several /dev
 - Add new group to user account: `sudo groupadd ros && sudo adduser <username> ros`
 - Reload udev rules: `sudo udevadm control --reload-rules && sudo udevadm trigger`
 
+#### Setting up Serial Comms
 These steps will be required to get serial comms working between the Pi and Nano.
 - Run the following to install ROS serial
     - `sudo apt-get update`
@@ -74,6 +76,7 @@ These steps will be required to get serial comms working between the Pi and Nano
     - `sudo systemctl stop serial-getty@ttyS0.service`
     - `sudo systemctl mask serial-getty@ttyS0.service`
 
+#### Bluetooth Setup
 For getting bluetooth controller working (for instance PS4 controller)
 - More info here: https://www.makeuseof.com/manage-bluetooth-linux-with-bluetoothctl/
 - Install bluetooth: 
@@ -81,11 +84,32 @@ For getting bluetooth controller working (for instance PS4 controller)
     - `sudo apt-get install pi-bluetooth`
 - To pair and connect a controller:
     - `bluetoothctl scan on`
-    - `bluetooth pair AA:BB:CC:11:22:33` (example device)
-    - `bluetooth connect AA:BB:CC:11:22:33`
+    - `bluetoothctl pair AA:BB:CC:11:22:33` (example device)
+    - `bluetoothctl connect AA:BB:CC:11:22:33`
+    - `bluetoothctl trust AA:BB:CC:11:22:33`
 - To test the controller
     - `jstest /dev/input/js0`
 
+At this stage, the controller will only connect if you run `bluetoothctl` in the terminal, and then press the pair button on the controller. To bypass the step of running `bluetoothctl`, do the following:
+- Create a shell script called connect_controller.sh (Make a note of where you create it) with the following contents:
+```.
+#!/bin/bash
+
+# Replace 'XX:XX:XX:XX:XX:XX' with your controller's MAC address
+controller_mac="XX:XX:XX:XX:XX:XX"
+
+# Use bluetoothctl to connect the controller
+bluetoothctl <<EOF
+connect $controller_mac
+exit
+EOF`
+```
+- Make it executable by running `chmod +x connect_controller.sh`
+- Create a UDEV rule to run this script every time the controller attempts to pair: `ACTION=="add", KERNEL=="hci0", RUN+="/path/to/connect_controller.sh"`
+- reload the UDEV rules: `sudo udevadm control --reload`
+The controller should now autopair every time the pair button is pressed, without needing to do anything on the Pi
+
+#### Wifi Setup
 To get WiFi working
 - Edit the file /etc/netplan/50-cloud-init.yaml 
 - Add the following to the bottom of the file
@@ -102,12 +126,14 @@ To get WiFi working
 If getting an error with "rounded_rectangle", need to install later version of Pillow.
 - Upgrade pillow with `pip3 install --upgrade Pillow`
 
+#### SD Card Backup
 It's a good idea to backup the sdcard every so often. Here is how to do that on linux.
 - Take out the sdcard from the Raspberry Pi and mount it into another linux system.
 - Run these commands to backup/restore. Replace source/destination appropriately.
     - Backup to file: `sudo dd if=/dev/sdb of=~/dingo_backup.img bs=4M status=progress`
     - Restore back to sdcard: `sudo dd if=dingo_backup of=/dev/sdb bs=4M status=progress`
 
+#### Servo Calibration
 Help with getting the servos calibrated
  - View the CalibrateServos script itself for additional instructions on dialing in servos.
  - (dingo_hardware_interfacing/dingo_servo_interfacing/src/dingo_servo_interfacing/CalibrateServos.py)
