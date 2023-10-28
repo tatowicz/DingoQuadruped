@@ -175,8 +175,11 @@ As an example of how the arguments can be used, if the code is to be run purely 
 `roslaunch dingo dingo.launch is_physical:=0 is_sim:=1`
 
 ### Dingo Joystick Controls
+<p align="center">
+    <img src="assets/joystick control map.jpg" style="align:centre" width="50%">
+</p>
 
-How to control the Dingo with a joystick. These instructions are based on a PS4 type controller. 
+The diagram above shows the mapping of joystick commands for the Dingo. These instructions are based on a PS4 type controller. An alternative, more general description of joystick commands is below:
 
 The Dingo has two main states: Rest and Trot. 
 - While in the TROT state: Left stick controls the robot's movement. Right stick controls the robot's tilt and turning.
