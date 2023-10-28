@@ -108,6 +108,13 @@ It's a good idea to backup the sdcard every so often. Here is how to do that on 
     - Backup to file: `sudo dd if=/dev/sdb of=~/dingo_backup.img bs=4M status=progress`
     - Restore back to sdcard: `sudo dd if=dingo_backup of=/dev/sdb bs=4M status=progress`
 
+Help with getting the servos calibrated
+ - View the CalibrateServos script itself for additional instructions on dialing in servos.
+ - (dingo_hardware_interfacing/dingo_servo_interfacing/src/dingo_servo_interfacing/CalibrateServos.py)
+ - Example commands:
+    - `rosrun dingo_servo_interfacing CalibrateServos all cal` (move all servos to calibration position)
+    - `rosrun dingo_servo_interfacing CalibrateServos fr high` (move front right servo to high position)
+
 ### Docker Container
 The files inside the base directory enable a docker container to be built and the code to inspected and debugged in visual studio code. This is mostly for debugging purposes, and is best for an external device debugging or adding to the code, rather than being used on the quadruped itself. Note: These instructions assume a linux OS.
 #### Preparing vscode
@@ -118,7 +125,7 @@ The files inside the base directory enable a docker container to be built and th
 
 #### Building and/or opening the container in vscode
 - In terminal, open the base folder containing the dingo quadruped code: `cd ~/any_folder_name/DingoQuadruped`
-- run `. code` to open the dingo quadruped base folder in vscode
+- run `code .` to open the dingo quadruped base folder in vscode
 - A prompt will appear saying either to build the container or run it, click "build" or "run"
 - Wait for the container to be built and initialised
 - (First time only) Once the container is built, Check that "ROS1.noetic" appears in the bottom left to indicate that the ros extension has correctly detected the ros version inside the container. If it does not appear, follow [these steps](https://youtu.be/JbBMF1aot5k?t=356)
@@ -140,6 +147,31 @@ With no arguments specified, it will assume a joystick controller is used for co
 
 As an example of how the arguments can be used, if the code is to be run purely in simulation with joystick control, you would launch the driver with the following arguments: 
 `roslaunch dingo dingo.launch is_physical:=0 is_sim:=1`
+
+### Dingo Joystick Controls
+
+How to control the Dingo with a joystick. These instructions are based on a PS4 type controller. 
+
+The Dingo has two main states: Rest and Trot. 
+- While in the TROT state: Left stick controls the robot's movement. Right stick controls the robot's tilt and turning.
+- While in the REST state: Left stick is disabled. Right stick controls the robot's gaze while staying in place.
+
+Buttons:
+- Joystick Control Toggle (L1 Button): Pause/Resume control from the joystick.
+- Gait Toggle (R1 Button): Toggles between trotting and resting modes.
+- Hop Request (X button): Perform a hop (Currently not implemented).
+
+Movement: (Speed proportional to how far stick is moved)
+- Left Stick (Horizontal): Pushing left or right strafes the robot in that direction.
+- Left Stick (Vertical): Push up to move forward, down to move backward.
+
+Gaze:
+- Right Stick (Horizontal): Pushing left or right turns the robot in that direction.
+- Right Stick (Vertical): Push up to raise front of robot, down to raise back of robot.
+
+Orientation:
+- D-pad (Vertical): Pressing up or down adjusts the height of the robot.
+- D-pad (Horizontal): Pressing left or right tilts the robot in that direction.
 
 ### Launching the gazebo simulation
 Make sure dingo_driver is running first, then:

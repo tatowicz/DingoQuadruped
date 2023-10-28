@@ -47,11 +47,16 @@ bool currently_estopped = 0;
 
 void setup()
 {
+  // Wait 15 seconds before checking starting serial.
+  // This avoids Raspberry Pi detecting serial console keystrokes and stopping autoboot.
+  delay(15000); 
+
   // This function is required by arduino standards, and is run once on startup to initialise ros, publishers, subscribers and array initial values
   Serial.begin(57600);
 
   while (!Serial.available()) {
-    delay(1000); // Wait 1 second before checking again
+    // Wait 1 second before checking again
+    delay(1000); 
   }
 
   arduino_nano_node.getHardware()->setBaud(57600);

@@ -45,9 +45,9 @@ class HardwareInterface():
             - Offsets for LOWER leg servos map allign the servo so that it is vertically down at zero degrees. Note that IK requires a transformation of
                 angle_sent_to_servo = (180-angle_from_IK) + 90 degrees to map to this physcial servo location.  """
         self.physical_calibration_offsets = np.array(
-                                                [[77, 81, 115, 76], 
-                                                [29, 8, 33, 13], 
-                                                [26, 13, 30, 4]])
+                    [[70, 107, 115, 64],
+                    [35, 10, 15, 22],
+                    [16, 27, 35, 14]])
         #applying calibration values to all servos
         self.create()
 
@@ -78,8 +78,9 @@ class HardwareInterface():
                     self.kit.servo[self.pins[axis_index,leg_index]].angle = self.servo_angles[axis_index,leg_index]
                 except:
                     rospy.logwarn("Warning - I2C IO error")
+## HERE ##
 
-    ##  THis method is used only in the calibrate servos file will make something similar to command individual actuators. 
+    ##  This method is used only in the calibrate servos file will make something similar to command individual actuators. 
     # def set_actuator_position(self, joint_angle, axis, leg):
     #     send_servo_command(self.pi, self.pwm_params, self.servo_params, joint_angle, axis, leg)
     def relax_all_motors(self,servo_list = np.ones((3,4))):
@@ -210,8 +211,8 @@ def lower_leg_angle_to_servo_angle(link, THETA2, THETA3):
     return THETA0
 
 def impose_physical_limits(desired_joint_angles):
-    ''' Takes desired upper and lower leg angles and clips them to be within the range of physcial possiblity. 
-    This is because osme angles are not possible for the physical linkage. Processing is done in degrees.
+    ''' Takes desired upper and lower leg angles and clips them to be within the range of physical possiblity. 
+    This is because some angles are not possible for the physical linkage. Processing is done in degrees.
         ----------
     desired_joint_angles : numpy array 3x4 of float angles (radians)
         Desired angles of all joints for all legs from inverse kinematics
@@ -259,8 +260,8 @@ def impose_physical_limits(desired_joint_angles):
     return np.radians(possible_joint_angles)
 
 ################################# TESING HARDWARE INTERFACING ############################
-""" THis section can be used to test this hardware interfacing by running this script only and supplying 
-    angles for the legs in thr joint space. Uncomment and then run using the command: 
+""" This section can be used to test this hardware interfacing by running this script only and supplying 
+    angles for the legs in the joint space. Uncomment and then run using the command: 
                         rosrun dingo_servo_interfacing HardwareInterface.py  
 """
 # from dingo_control.Config import Configuration,Leg_linkage
