@@ -126,7 +126,7 @@ To get WiFi working
 If getting an error with "rounded_rectangle", need to install later version of Pillow.
 - Upgrade pillow with `pip3 install --upgrade Pillow`
 
-####LCD Node Additional Setup
+#### LCD Node Additional Setup
 The LCD node has been created following the waveshare tutorial here: https://www.waveshare.com/wiki/1.47inch_LCD_Module. Apart from installing the libraries listed there, the fonts also need to be moved into the ubuntu fonts folder to be used by executing the following lines:
 - `cd ~`
 - `sudo apt-get install unzip -y`
