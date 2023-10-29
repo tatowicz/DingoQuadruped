@@ -105,7 +105,7 @@ exit
 EOF`
 ```
 - Make it executable by running `chmod +x connect_controller.sh`
-- Create a UDEV rule to run this script every time the controller attempts to pair: `ACTION=="add", KERNEL=="hci0", RUN+="/path/to/connect_controller.sh"`
+- Create a UDEV rule to run this script every time the controller attempts to pair: `SUBSYSTEM=="bluetooth", KERNEL=="hci0", ACTION=="add", ENV{DEVTYPE}=="adapter", TAG+="systemd", SYMLINK+="bluetooth", RUN+="/bin/sleep 10", RUN+="/path/to/connect_controller.sh"`
 - reload the UDEV rules: `sudo udevadm control --reload`
 The controller should now autopair every time the pair button is pressed, without needing to do anything on the Pi
 
