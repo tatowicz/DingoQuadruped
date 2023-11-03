@@ -134,7 +134,6 @@ class DingoDisplayNode:
             rospy.loginfo("Quitting...")
             self.disp.clear()
             self.disp.module_exit()
-            print("finally 1")
 
 
 if __name__ == '__main__':

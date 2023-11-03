@@ -45,9 +45,9 @@ class HardwareInterface():
             - Offsets for LOWER leg servos map allign the servo so that it is vertically down at zero degrees. Note that IK requires a transformation of
                 angle_sent_to_servo = (180-angle_from_IK) + 90 degrees to map to this physcial servo location.  """
         self.physical_calibration_offsets = np.array(
-                    [[70, 107, 115, 64],
-                    [35, 10, 15, 22],
-                    [16, 27, 35, 14]])
+                    [[75, 130, 113, 73],
+                    [29, 13, 33, 15],
+                    [26, 12, 30, 4]])
         #applying calibration values to all servos
         self.create()
 

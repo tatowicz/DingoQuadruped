@@ -57,6 +57,13 @@
   <exec_depend>message_runtime</exec_depend>
   <depend>numpy</depend>
   <depend>pyserial</depend>
+  <exec_depend>spidev</exec_depend>
+  <depend>logging</depend>
+  <depend>os</depend>
+  <depend>rospkg</depend>
+  <depend>socket</depend>
+  <depend>time</depend>
+  
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
