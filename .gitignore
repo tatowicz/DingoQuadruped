@@ -8,4 +8,4 @@ dingo_ws/.catkin_tools/*
 dingo_ws/.vscode/*
 .vscode/*
 dingo_ws/src/.vscode/*
-dingo_ws/src/dingo_hardware_interfacing/dingo_lcd_interfacing/scripts/dingo_lcd_interfacing.py
+dingo_ws/src/dingo_hardware_interfacing/dingo_servo_interfacing/src/dingo_servo_interfacing/CalibrateServos.py
