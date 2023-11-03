@@ -1,7 +1,7 @@
 #include <ros.h>
 #include <std_msgs/Bool.h>
 #include <std_msgs/Float32.h>
-#include <ElectricalMeasurements.h>
+#include <Dingo_Peripheral_Interfacing/ElectricalMeasurements.h>
 #include <avr/sleep.h>
 
 ros::NodeHandle_<ArduinoHardware, 5, 5, 128, 256> arduino_nano_node; //(max) 5 publishers, 2 subscribers, 64 byte input buffer, 256 byte output buffer. Default is 25,25,512,512
