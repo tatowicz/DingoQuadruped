@@ -233,5 +233,9 @@ The ROS extension has two options to enable debugging. The first is to attach to
 If the debugger is not stopping at breakpoints, you may need to edit the tasks.json file which tells vscode how to build the container. Ensure that the catkin build task defined in tasks.json includes the option `-DCMAKE_BUILD_TYPE=Debug`.
 
 
+#### Updates
+
+- Added CAD files to lfs exported in .f3d format (fusion 360)
+- Added power PCB files in fusion360 format, re-draw and layout
 
 
