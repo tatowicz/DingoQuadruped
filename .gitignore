@@ -9,4 +9,5 @@ dingo_ws/.vscode/*
 .vscode/*
 dingo_ws/src/.vscode/*
 dingo_ws/src/dingo_description/meshes/*
+*.log
 
